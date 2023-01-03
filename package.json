@@ -1,0 +1,15 @@
+{
+  "name": "rt-light-bot-start",
+  "version": "1.0.0",
+  "description": "A light bot start with basic modular armour, a pair of roboports, a few bots, and equipment to power them.",
+  "author": "RaptorTWiked",
+  "license": "LGPLv3",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf build && /bin/bash scripts/build.sh",
+    "read-info": "ts-node scripts/read-info.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
