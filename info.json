@@ -1,0 +1,23 @@
+{
+  "name": "rt-light-bot-start",
+  "version": "1.0.0",
+  "title": "Light Bot Start",
+  "description": "Start the game with a few bots.",
+  "author": "RaptorTWiked",
+  "factorio_version": "1.1",
+  "dependencies": [
+    "base >= 1.1"
+  ],
+  "package": {
+    "ignore": [
+      ".vscode",
+      "assets",
+      "build",
+      "scripts",
+      ".gitignore",
+      "package-lock.json",
+      "package.json",
+      "README.md"
+    ]
+  }
+}
