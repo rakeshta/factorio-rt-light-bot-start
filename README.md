@@ -11,6 +11,12 @@ When you crash land into a new save, you find the following items in your invent
 - A few construction bots
 - A few personal equipment batteries and solar panels
 
+Following additional items can be added if you turn them on in the startup settings:
+
+- Two stacks of cliff explosives
+- Two stacks of landfill
+- A car
+
 ## Try also
 
 - [K2 Fluid Storage](https://mods.factorio.com/mod/k2-fluid-storage)
