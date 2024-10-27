@@ -24,3 +24,11 @@ Following additional items can be added if you turn them on in the startup setti
 - [K2 Flare Stack](https://mods.factorio.com/mod/k2-flare-stack)
 - [K2 Steel Plates](https://mods.factorio.com/mod/k2-steel-pipes)
 - [K2 Railgun Turret](https://mods.factorio.com/mod/k2-railgun-turret)
+
+<br/>
+
+----
+
+<div style="display: flex; justify-content: center; width:100%;">
+<img style="border-radius: 12px" src="https://rakeshta.github.io/factorio-rt-light-bot-start/images/compatible-2.0.png" alt="2.0 Compatible" width=180>
+</div>
