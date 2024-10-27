@@ -1,10 +1,10 @@
 {
   "name": "rt-light-bot-start",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Light Bot Start",
   "description": "A light bot start with basic modular armour, a pair of roboports, a few bots, and equipment to power them.",
   "author": "RaptorTWiked",
-  "factorio_version": "1.1",
+  "factorio_version": "2.0",
   "dependencies": [
     "base >= 1.1"
   ],
