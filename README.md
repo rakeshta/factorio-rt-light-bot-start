@@ -17,3 +17,4 @@ When you crash land into a new save, you find the following items in your invent
 - [K2 Steel Pipes](https://mods.factorio.com/mod/k2-steel-pipes)
 - [K2 Flare Stack](https://mods.factorio.com/mod/k2-flare-stack)
 - [K2 Steel Plates](https://mods.factorio.com/mod/k2-steel-pipes)
+- [K2 Railgun Turret](https://mods.factorio.com/mod/k2-railgun-turret)
