@@ -10,7 +10,6 @@
     "/Users/rakesh/Library/Application Support/Steam/steamapps/common/Factorio/factorio.app/Contents/data"
   ],
   "Lua.workspace.userThirdParty": [
-    "/Users/rakesh/Library/Application Support/Code/User/workspaceStorage/fb650f73fabfd6463256fc96ef317b2d/justarandomgeek.factoriomod-debug/sumneko-3rd",
     "/Users/rakesh/Library/Application Support/Code/User/workspaceStorage/372275618924752516ca83e43037fb4d/justarandomgeek.factoriomod-debug/sumneko-3rd"
   ],
   "Lua.diagnostics.globals": [],
@@ -26,5 +25,6 @@
   "Lua.runtime.version": "Lua 5.2",
   "Lua.runtime.special": {
     "__object_name": "type"
-  }
+  },
+  "Lua.workspace.checkThirdParty": "ApplyInMemory"
 }
