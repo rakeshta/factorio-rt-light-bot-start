@@ -1,0 +1,6 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.2.0
+Date: 10. 08. 2026
+  Features:
+    - Now compatible with Factorio 2.1
+    - Starting modular armour is worn and equipment is auto-equipped into the grid

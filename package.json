@@ -1,6 +1,6 @@
 {
   "name": "rt-light-bot-start",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A light bot start with basic modular armour, a pair of roboports, a few bots, and equipment to power them.",
   "author": "RaptorTWiked",
   "license": "LGPLv3",
@@ -9,7 +9,8 @@
     "build": "rm -rf build && /bin/bash scripts/build.sh",
     "link": "ln -s $(pwd) ~/Library/Application\\ Support/factorio/mods/$(npm run --silent read-info \"name\")",
     "unlink": "rm ~/Library/Application\\ Support/factorio/mods/$(npm run --silent read-info \"name\")",
-    "read-info": "ts-node scripts/read-info.ts"
+    "read-info": "ts-node scripts/read-info.ts",
+    "badge": "/bin/bash scripts/render-badge.sh"
   },
   "devDependencies": {
     "ts-node": "^10.9.1"

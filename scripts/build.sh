@@ -19,18 +19,11 @@ ZIP_NAME=${PACKAGE_NAME}_${PACKAGE_VERSION}
 ZIP_FILE=${ZIP_NAME}.zip
 
 # Ensure zip dir exists
-if [ ! -d "${ZIP_DIR}" ]; then
-    mkdir -p ${BUILD_DIR}/${ZIP_NAME}
-fi
+mkdir -p ${BUILD_DIR}/${ZIP_NAME}
 
 # Copy files to zip dir
 cp -r \
-  ./compatibility \
-  ./graphics \
-  ./lib \
   ./locale \
-  ./prototypes \
-  ./sounds \
   ./*.lua \
   ./info.json \
   ./LICENSE \

@@ -1,11 +1,10 @@
 --
---  control.lua
+--  settings.lua
 --  factorio-rt-light-bot-start
 --
 --  Created by Rakesh Ayyaswami on 28 Oct 2024.
 --
 
--- settings.lua
 data:extend({
   {
     type = "bool-setting",
