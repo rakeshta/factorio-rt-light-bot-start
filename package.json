@@ -9,8 +9,7 @@
     "build": "rm -rf build && /bin/bash scripts/build.sh",
     "link": "ln -s $(pwd) ~/Library/Application\\ Support/factorio/mods/$(npm run --silent read-info \"name\")",
     "unlink": "rm ~/Library/Application\\ Support/factorio/mods/$(npm run --silent read-info \"name\")",
-    "read-info": "ts-node scripts/read-info.ts",
-    "badge": "/bin/bash scripts/render-badge.sh"
+    "read-info": "ts-node scripts/read-info.ts"
   },
   "devDependencies": {
     "ts-node": "^10.9.1"
