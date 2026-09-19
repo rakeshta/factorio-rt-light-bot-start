@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.1
+Date: 19. 09. 2026
+  Bugfixes:
+    - Starting equipment is placed deterministically now: roboports in the top corners, batteries in the bottom corners, solar panels filling the rest, so nothing is left behind in the inventory on the default 5x5 modular armour grid
+---------------------------------------------------------------------------------------------------
 Version: 1.2.0
 Date: 10. 08. 2026
   Features:

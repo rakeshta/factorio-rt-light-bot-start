@@ -12,8 +12,9 @@
 -- Loadout definition
 --------------------------------------------------------------------------------
 
--- Balanced install order: keep roboports, batteries, and solars interleaved so
--- smaller grids still get a usable mix. Leftovers stay in inventory.
+-- Fallback install order for grids that do not fit the corner anchors: keep
+-- roboports, batteries, and solars interleaved so smaller grids still get a
+-- usable mix. Leftovers stay in inventory.
 -- Sizes: roboport 2x2, battery 1x2, solar 1x1.
 -- Totals: 2 roboports, 4 batteries, 9 solars.
 local EQUIP_ORDER = {
@@ -128,16 +129,51 @@ local function wear_modular_armor(character, main_inventory)
   armor_inv.insert { name = "modular-armor", count = 1 }
 end
 
---- Try to place one equipment piece into the grid.
---- Only removes a matching inventory item after a successful put, so failed
---- placements (full / fragmented grid) leave the spare in the backpack.
---- @return boolean true if the piece was installed
-local function try_put_equipment(grid, main_inventory, name)
-  if not prototypes.equipment[name] then
+--- Get the grid footprint of an equipment prototype.
+--- @return integer? width, integer? height
+local function equipment_size(name)
+  local proto = prototypes.equipment[name]
+  if not proto then
+    return nil
+  end
+
+  local shape = proto.shape
+  if not shape or not shape.width or not shape.height then
+    return nil
+  end
+
+  return shape.width, shape.height
+end
+
+--- True when every cell of a width x height rectangle at (x, y) is free.
+--- Equipment grid positions are 0-based: (0, 0) is the top-left cell.
+local function rectangle_is_free(grid, x, y, width, height)
+  if x < 0 or y < 0 or x + width > grid.width or y + height > grid.height then
     return false
   end
 
-  local placed = grid.put { name = name }
+  for dx = 0, width - 1 do
+    for dy = 0, height - 1 do
+      if grid.get { x = x + dx, y = y + dy } then
+        return false
+      end
+    end
+  end
+
+  return true
+end
+
+--- Try to place one equipment piece at an exact grid position.
+--- Only removes a matching inventory item after a successful put, so failed
+--- placements (occupied cell / out of bounds) leave the spare in the backpack.
+--- @return boolean true if the piece was installed
+local function put_equipment_at(grid, main_inventory, name, x, y)
+  local width, height = equipment_size(name)
+  if not width or not rectangle_is_free(grid, x, y, width, height) then
+    return false
+  end
+
+  local placed = grid.put { name = name, position = { x = x, y = y } }
   if not placed then
     return false
   end
@@ -148,15 +184,82 @@ local function try_put_equipment(grid, main_inventory, name)
   return true
 end
 
---- Walk EQUIP_ORDER and fill the grid. Skips entries that do not fit and keeps
---- going so smaller 1x1/1x2 pieces can still fill gaps after a failed 2x2 put.
-local function fill_equipment_grid(grid, main_inventory)
-  for _, name in ipairs(EQUIP_ORDER) do
-    try_put_equipment(grid, main_inventory, name)
+--- Place roboports in the top corners and batteries in the bottom corners.
+--- On the default 5x5 modular armour grid this gives the classic symmetric look:
+--- roboports left and right on top, four batteries along the bottom.
+--- Equipment grid positions are 0-based.
+local function place_corner_anchors(grid, main_inventory)
+  local width, height = grid.width, grid.height
+  local anchors = {
+    { "personal-roboport-equipment", 0, 0 },         -- top-left
+    { "personal-roboport-equipment", width - 2, 0 }, -- top-right
+    { "battery-equipment", 0, height - 2 },          -- bottom-left pair
+    { "battery-equipment", 1, height - 2 },
+    { "battery-equipment", width - 2, height - 2 },  -- bottom-right pair
+    { "battery-equipment", width - 1, height - 2 },
+  }
+
+  for _, anchor in ipairs(anchors) do
+    local name, x, y = anchor[1], anchor[2], anchor[3]
+    if main_inventory and main_inventory.get_item_count(name) > 0 then
+      put_equipment_at(grid, main_inventory, name, x, y)
+    end
   end
 end
 
---- Wear modular armour and install as much of the balanced equipment order as fits.
+--- First free row-major spot for one piece. Used for leftovers on grids that
+--- do not fit the corner anchors (small or modded equipment grids).
+--- Equipment grid positions are 0-based.
+local function put_equipment_first_fit(grid, main_inventory, name)
+  local width, height = equipment_size(name)
+  if not width then
+    return false
+  end
+
+  for y = 0, grid.height - height do
+    for x = 0, grid.width - width do
+      if put_equipment_at(grid, main_inventory, name, x, y) then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+--- Fill every remaining free cell with 1x1 solar panels.
+--- Equipment grid positions are 0-based.
+local function fill_solars(grid, main_inventory)
+  local name = "solar-panel-equipment"
+  local width, height = equipment_size(name)
+  if not width or not main_inventory then
+    return
+  end
+
+  for y = 0, grid.height - height do
+    for x = 0, grid.width - width do
+      if main_inventory.get_item_count(name) < 1 then
+        return
+      end
+      put_equipment_at(grid, main_inventory, name, x, y)
+    end
+  end
+end
+
+--- Fill the grid: corner anchors first, then any leftover equipment in the
+--- balanced EQUIP_ORDER fallback, then solar panels into the remaining cells.
+local function fill_equipment_grid(grid, main_inventory)
+  place_corner_anchors(grid, main_inventory)
+
+  for _, name in ipairs(EQUIP_ORDER) do
+    if main_inventory and main_inventory.get_item_count(name) > 0 then
+      put_equipment_first_fit(grid, main_inventory, name)
+    end
+  end
+
+  fill_solars(grid, main_inventory)
+end
+
+--- Wear modular armour and install the starting loadout into its grid.
 local function equip_starting_loadout(character)
   if not character or not character.valid then
     return
